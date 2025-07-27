@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .rectangle {
+           display: grid;
+            height: 600px;
+            width: 400px;
+            border: 2px solid black;
+            border-radius: 10px;
+            margin-left: 100px;
+            margin-top: 100px;
+        }
+        .line {
+            display: flex;
+        }
+        .box {
+            height: 50px;
+            width: 50px;
+            border: 2px solid black;
+            border-radius: 10px;
+            margin-left: 50px;
+            margin-top: 50px;
+            background-color: black;
+        }
+        .text {
+            margin-left: 20px;
+            margin-top: 65px;
+            font-size: 20px;
+        }
+        .select {
+            width: 290px;
+            height: 55px;
+            background-color: white;
+            border: 2px solid black;
+            border-radius: 10px;
+            text-align: left;
+            margin-bottom: 3px;
+            margin-left: 50px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .second-line {
+            display: grid;
+            white-space: nowrap;
+        }
+        .first-state {
+            width: 290px;
+            height: 150px;
+            border-radius: 10px;
+            background-color: lightgray;
+            margin-bottom: 5px;
+            margin-left: 50px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .select-language {
+            margin: 0;
+            text-align: center;
+        }
+        .select-language.show-loading {
+            display: block;
+        }
+        .retry {
+            width: 290px;
+            height: 40px;
+            background-color: red;
+            color: white;
+            margin-bottom: 200px;
+            border-radius: 10px;
+            margin-left: 50px;
+        }
+        .select-language.show-error {
+            display: block;
+            background-color: crimson;
+        }
+    </style>
+    <link href="style.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>GitHub Random Repository</title>
+</head>
+<body>
+
+<div class="rectangle">
+    <div class="line">
+        <div class="box"></div>
+        <div class="text">GitHub Repository Finder</div>
+
+    </div>
+        <button class="select" id="select" onclick="DropDown()">
+            Select a Language
+        </button>
+
+        <div class="first-state">
+            <div class="select-language" id="select-language" style="display: block">Please select a language</div>
+            <div class="select-language" id="loading" style="display: none">Loading, please wait...</div>
+            <div class="select-language" id="error" style="display: none">Error fetching repositories</div>
+        </div>
+
+    <button class="retry">Click to retry
+    </button>
+</div>
+
+
+
+
+<script>
+
+</script>
+</body>
+</html>
