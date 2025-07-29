@@ -3,7 +3,7 @@
 <head>
     <style>
         .rectangle {
-           display: grid;
+            display: grid;
             height: 600px;
             width: 400px;
             border: 2px solid black;
@@ -53,8 +53,12 @@
             margin-left: 50px;
 
             display: flex;
+            visibility: visible;
             justify-content: center;
             align-items: center;
+        }
+        .first-state.hide {
+            visibility: hidden;
         }
         .select-language {
             margin: 0;
@@ -72,9 +76,44 @@
             border-radius: 10px;
             margin-left: 50px;
         }
+        .retry.show {
+            visibility: visible;
+        }
         .select-language.show-error {
             display: block;
             background-color: crimson;
+        }
+        .details {
+            width: 290px;
+            height: 200px;
+            border-radius: 10px;
+            background-color: white;
+            margin-bottom: 5px;
+            margin-left: 50px;
+            border: 2px solid black;
+            display: grid;
+            visibility: hidden;
+        }
+        .details.show {
+            visibility: visible;
+        }
+        .refresh {
+            visibility: hidden;
+            width: 260px;
+            height: 50px;
+            background-color: black;
+            color: white;
+            border: 2px solid black;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 15px;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            margin-left: 60px;
+        }
+        .refresh.show {
+            visibility: visible;
         }
     </style>
     <link href="style.css" rel="stylesheet">
@@ -89,24 +128,112 @@
         <div class="text">GitHub Repository Finder</div>
 
     </div>
-        <button class="select" id="select" onclick="DropDown()">
-            Select a Language
-        </button>
+    <button class="select" id="select" onclick="DropDown()">
+        Select a Language
+    </button>
 
-        <div class="first-state">
-            <div class="select-language" id="select-language" style="display: block">Please select a language</div>
-            <div class="select-language" id="loading" style="display: none">Loading, please wait...</div>
-            <div class="select-language" id="error" style="display: none">Error fetching repositories</div>
-        </div>
+    <div class="drop-down-Container" id="DDC"></div>
+    <div class="details" id="detail"></div>
+    <button class="refresh" id="refresh">Refresh</button>
 
-    <button class="retry">Click to retry
+
+    <div class="first-state" id="first-state-id">
+        <div class="select-language" id="select-language" style="display: block">Please select a language</div>
+        <div class="select-language" id="loading" style="display: none">Loading, please wait...</div>
+        <div class="select-language" id="error" style="display: none">Error fetching repositories</div>
+    </div>
+
+    <button class="retry" style="visibility: hidden">Click to retry
     </button>
 </div>
 
 
-
-
 <script>
+    let languages = [];
+    fetch('languages.json').then(response => response.json()).then(data => {languages = data;});
+
+    async function getRandomRepo(LanguageName){
+        const perPage = 100;
+        const maxPages = 10;
+        const randomPage = Math.floor(Math.random() * maxPages) + 1;
+
+        const query = `language:${LanguageName}`;
+        const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=${perPage}&page=${randomPage}`;
+
+        const response = await fetch(url, {
+            headers: {'Accept': 'application/vnd.github.v3+json',}});
+
+        if (!response.ok){
+            throw new Error(`GitHub API Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const items = data.items;
+
+        if (items.length === 0){
+            throw new Error("No repo found");
+        }
+
+        const randomIndex = Math.floor(Math.random() * items.length);
+        return items[randomIndex];
+    }
+    function DropDown (){
+        const Container = document.getElementById("DDC");
+        const DropDown = document.createElement("div");
+        DropDown.style.height = "100px";
+        DropDown.style.width = "200px";
+        DropDown.style.border = "2px solid black";
+        DropDown.style.borderRadius = "10px";
+        DropDown.style.display = "grid";
+        DropDown.style.opacity = "1";
+        DropDown.style.transition = "opacity 0.5 ease";
+
+        languages.forEach(language => {
+                const button = document.createElement("button");
+                button.innerText = language.title;
+                button.style.width = "200px";
+                button.style.height = "25px";
+                button.style.border = "2px solid black";
+                button.style.borderRadius = "10px";
+
+                DropDown.appendChild(button);
+                Container.appendChild(DropDown);
+
+                button.onclick = function (){
+                    DropDown.style.opacity = "0";
+                    const select = document.getElementById("select");
+                    select.innerText = button.innerText;
+
+                    const state = document.getElementById("first-state-id");
+                    state.classList.add('hide');
+
+                    const details = document.getElementById("detail");
+
+                    const refresh = document.getElementById("refresh");
+
+                    const title = document.createElement("span");
+                    const desc = document.createElement("span");
+                    getRandomRepo(button.innerText).then(
+                        repo => {
+                            title.innerText = repo.full_name;
+                            desc.innerText = repo.description;
+                        }
+                    )
+                    details.appendChild(title);
+                    details.appendChild(desc);
+                    details.classList.add("show");
+                    refresh.classList.add("show");
+
+                    refresh.onclick = function (){
+                        DropDown.style.opacity = "1";
+                        select.innerText = "Select a Language";
+                        state.classList.remove('hide');
+                        details.classList.remove("show");
+                        refresh.classList.remove("show");
+                    }
+                }
+        })
+    }
 
 </script>
 </body>
