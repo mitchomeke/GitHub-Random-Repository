@@ -1,0 +1,114 @@
+.rectangle {
+    display: grid;
+    height: 600px;
+    width: 400px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-left: 100px;
+    margin-top: 100px;
+}
+.line {
+    display: flex;
+}
+.box {
+    height: 50px;
+    width: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-left: 50px;
+    margin-top: 50px;
+    background-color: black;
+}
+.text {
+    margin-left: 20px;
+    margin-top: 65px;
+    font-size: 20px;
+}
+.select {
+    width: 290px;
+    height: 55px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-align: left;
+    margin-bottom: 3px;
+    margin-top: 10px;
+    margin-left: 50px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.second-line {
+    display: grid;
+    white-space: nowrap;
+}
+.first-state {
+    width: 290px;
+    height: 150px;
+    border-radius: 10px;
+    background-color: lightgray;
+    margin-bottom: 5px;
+    margin-left: 50px;
+
+    display: flex;
+    visibility: visible;
+    justify-content: center;
+    align-items: center;
+}
+.first-state.hide {
+    visibility: hidden;
+}
+.select-language {
+    margin: 0;
+    text-align: center;
+}
+.select-language.show-loading {
+    display: block;
+}
+.retry {
+    width: 290px;
+    height: 40px;
+    background-color: red;
+    color: white;
+    margin-bottom: 200px;
+    border-radius: 10px;
+    margin-left: 50px;
+}
+.retry.show {
+    visibility: visible;
+}
+.select-language.show-error {
+    display: block;
+    background-color: crimson;
+}
+.details {
+    width: 290px;
+    height: 200px;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 5px;
+    margin-left: 50px;
+    border: 2px solid black;
+    display: grid;
+    visibility: hidden;
+}
+.details.show {
+    visibility: visible;
+}
+.refresh {
+    visibility: hidden;
+    width: 260px;
+    height: 50px;
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    margin-left: 60px;
+}
+.refresh.show {
+    visibility: visible;
+}
