@@ -179,14 +179,17 @@
     }
     function DropDown (){
         const Container = document.getElementById("DDC");
+        Container.innerHTML = "";
+
         const DropDown = document.createElement("div");
-        DropDown.style.height = "100px";
+        DropDown.style.height = "200px";
         DropDown.style.width = "200px";
         DropDown.style.border = "2px solid black";
         DropDown.style.borderRadius = "10px";
         DropDown.style.display = "grid";
         DropDown.style.opacity = "1";
-        DropDown.style.transition = "opacity 0.5 ease";
+        DropDown.style.transition = "opacity 0.5s ease";
+        DropDown.style.marginLeft = "90px";
 
         languages.forEach(language => {
                 const button = document.createElement("button");
@@ -225,7 +228,7 @@
                     refresh.classList.add("show");
 
                     refresh.onclick = function (){
-                        DropDown.style.opacity = "1";
+                        DropDown.style.opacity = "0";
                         select.innerText = "Select a Language";
                         state.classList.remove('hide');
                         details.classList.remove("show");
